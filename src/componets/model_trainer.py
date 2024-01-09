@@ -40,12 +40,13 @@ class ModelTrainer:
             }
 
             model_report:dict=evaluate_model(X_train,y_train,X_test,y_test,models)
-            print(model_report)
+            print(model_report.values())
             print('\n=================================================================\n')
             logging.info(f'Model Report:{model_report}')
 
             #to get best model score from dictionary
-            best_model_score=max(sorted(model_report.values))
+            sort_lst = sorted(list(model_report.values()))
+            best_model_score=max(sort_lst)
             best_model_name=list(model_report.keys())[
                 list(model_report.values()).index(best_model_score)
             ]

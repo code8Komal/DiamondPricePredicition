@@ -22,13 +22,15 @@ def save_object(file_path,obj):
 def evaluate_model(X_train,y_train,X_test,y_test,model):
     try:
         report={}
+        # print(model)
         for i in range(len(model)):
-            model=list(model.values())[i]
+            
+            mod=list(model.values())[i]
             #train model
-            model.fit(X_train,y_train)
+            mod.fit(X_train,y_train)
 
             #predict Testing data
-            y_test_pred=model.predict(X_test)
+            y_test_pred=mod.predict(X_test)
 
             #get R2 scores for train and test data
             #train_model_score=r2_score(ytrain,y_train_pred)

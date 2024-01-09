@@ -14,7 +14,7 @@ from src.exception import CustomException
 from src.logger import logging
 
 from src.utils import save_object
-from data_ingestion import dataIngestion
+from src.componets.data_ingestion import dataIngestion
 
 ##Data Transformation Class
 @dataclass
