@@ -5,7 +5,7 @@ from sklearn.preprocessing import OrdinalEncoder # Ordinal Encoding
 from sklearn.pipeline import Pipeline
 from sklearn.compose import ColumnTransformer
 
-import sys,os
+import sys, os
 from dataclasses import dataclass
 import pandas as pd 
 import numpy as np
@@ -14,11 +14,12 @@ from src.exception import CustomException
 from src.logger import logging
 
 from src.utils import save_object
+from data_ingestion import dataIngestion
 
 ##Data Transformation Class
 @dataclass
 class DataTransformationconfig:
-    preprocessor_ob_file_path=os.path('artifacts','preprocessor.pkl')
+    preprocessor_ob_file_path=os.path.join('artifacts','preprocessor.pkl')
 
 ## Data Ingestionconfig class
 class DataTransformation:
@@ -67,15 +68,6 @@ class DataTransformation:
             logging.info("Error in data transformatioon")
             raise CustomException(e,sys)
 
-
-            
-
-        
-
-
-
-
-
     def initiate_data_transformation(self,train_path,test_path):
         try:
             #Reading train and test data
@@ -102,11 +94,14 @@ class DataTransformation:
 
             ## apply the transformation
             input_feature_train_arr=preprocessing_obj.fit_transform(input_feature_train_df)
-            input_feature_test_arr=preprocessing_obj.transform(input_feature_train_df)
+            input_feature_test_arr=preprocessing_obj.transform(input_feature_test_df)
 
             logging.info("Applying preprocess object on trainig and testing datasets.")
 
             train_arr= np.c_[input_feature_train_arr,np.array(target_feature_train_df)]
+
+            # print(input_feature_test_arr.size, np.array(target_feature_test_df).size)
+
             test_arr=np.c_[input_feature_test_arr,np.array(target_feature_test_df)]
 
             save_object(
@@ -129,5 +124,8 @@ class DataTransformation:
             raise CustomException(e,sys)
 
 
-
-
+# if __name__=="__main__":
+#     obj = DataTransformation()
+#     obj_2 = dataIngestion()
+#     train_data_path,test_data_path=obj_2.initiate_data_ingestion()
+#     obj.initiate_data_transformation(train_data_path,test_data_path)
