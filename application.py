@@ -12,7 +12,7 @@ def home_page():
 @app.route('/predict',methods=['GET','POST'])
 def predict_datapoint():
     if request.method=='GET':
-        return render_template('from,html')
+        return render_template('form.html')
     else:
         data=CustomData(
             carat=float(request.form.get('carat')),
@@ -23,7 +23,7 @@ def predict_datapoint():
             z=float(request.form.get('z')),
             cut=request.form.get('cut'),
             color=request.form.get('color'),
-            clarity=float(request.form.get('clarity')),
+            clarity=request.form.get('clarity'),
         )
         final_new_data=data.get_data_as_dataframe()
         predict_pipeline=PredictPipeline()
@@ -31,7 +31,7 @@ def predict_datapoint():
 
         results=round(pred[0],2)
 
-        return render_template('from.html',final_result=results)
+        return render_template('form.html',final_result=results)
     
 
 
